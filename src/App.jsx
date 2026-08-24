@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './App.css'
-
-function App() {
+import { withAuthenticator } from '@aws-amplify/ui-react'
+import '@aws-amplify/ui-react/styles.css'
+function App({ user, signOut }) {
   const [description, setDescription] = useState('')
   const [amount, setAmount] = useState('')
   const [expenses, setExpenses] = useState([])
@@ -28,7 +29,11 @@ function App() {
     <div className="app">
       <h1>Cloud Expense Tracker</h1>
       <p>Simple personal expense management application</p>
+      <p>Signed in as: {user?.signInDetails?.loginId}</p>
 
+<button onClick={signOut}>
+  Sign Out
+</button>
       <form onSubmit={addExpense}>
         <input
           type="text"
@@ -59,5 +64,4 @@ function App() {
     </div>
   )
 }
-
-export default App
+export default withAuthenticator(App)
